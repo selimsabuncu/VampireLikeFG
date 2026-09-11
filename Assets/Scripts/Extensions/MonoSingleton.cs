@@ -17,6 +17,7 @@ namespace Extensions
                     {
                         GameObject newGO = new GameObject();
                         _instance = newGO.AddComponent<T>();
+                        Debug.LogWarning($"Couldn't found an instance of {typeof(T)}, created one temporarily.");
                     }
                 }
 

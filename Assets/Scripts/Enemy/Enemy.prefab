@@ -108,6 +108,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy.BasicEnemy
   movementSpeed: 3
   health: 100
+  attackDamage: 5
+  xpToDrop: 5
+  attackRange: 1
+  gizmosOn: 0
 --- !u!58 &65505821441204707
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -7,7 +7,8 @@ namespace Player
     public class PlayerController : MonoSingleton<PlayerController>
     {
         private Vector3 _movement;
-        [SerializeField] private float movementSpeed;
+        [SerializeField] private float movementSpeed = 5;
+        [SerializeField] private float health = 100;
         
         private void Update()
         {
@@ -20,6 +21,16 @@ namespace Player
         private void FixedUpdate()
         {
             transform.position += _movement * (movementSpeed * Time.fixedDeltaTime);
+        }
+
+        public void TakeDamage(float damageAmount)
+        {
+            health -= damageAmount;
+        }
+
+        public void Die()
+        {
+            //game over screen
         }
     }
 }
