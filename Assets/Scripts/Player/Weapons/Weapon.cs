@@ -1,15 +1,20 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Player.Weapons
 {
-    public sealed class Weapon : MonoBehaviour
+    //TODO: could be simplified and optimized better. Too complex and mind confusing at the moment.
+    //Can get rid of the whole system and just make one script each for attackSkill.
+    [CreateAssetMenu(menuName = "Weapons/Weapon")]
+    public class Weapon : ScriptableObject
     {
-        [SerializeField] private float damage;
-        [SerializeField] private float level;
+        public Sprite attackSprite;
+        public GameObject attackPrefab;
+        
+        public WeaponBaseData baseData;
+        public List<WeaponLevelData> levels = new List<WeaponLevelData>(8);
 
-
-        private void Attack() { }
-        private void DealDamage() => PlayerController.Instance.TakeDamage(damage);
+        public WeaponBehaviourType behaviour;
+        public WeaponTargetingType targeting;
     }
 }

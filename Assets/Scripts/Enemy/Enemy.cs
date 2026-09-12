@@ -21,7 +21,6 @@ namespace Enemy
         
         protected virtual void Start()
         {
-            Debug.Log(gameObject.name);
             _attackCoroutine = StartCoroutine(Attack());
         }
 
