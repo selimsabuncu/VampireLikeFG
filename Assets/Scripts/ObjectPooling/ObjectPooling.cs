@@ -15,11 +15,13 @@ namespace ObjectPooling
         }
 
         public List<Pool> pools;
-        private Dictionary<string, Queue<GameObject>> poolDictionary;
+        private Dictionary<string, Queue<GameObject>> _poolDictionary;
 
-        void Start()
+        protected override void Awake()
         {
-            poolDictionary = new Dictionary<string, Queue<GameObject>>();
+            base.Awake(); //MonoSingleton
+            
+            _poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
             foreach (Pool pool in pools)
             {
@@ -32,27 +34,27 @@ namespace ObjectPooling
                     objectPool.Enqueue(obj);
                 }
 
-                poolDictionary.Add(pool.tag, objectPool);
+                _poolDictionary.Add(pool.tag, objectPool);
             }
         }
 
         public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
         {
-            if (!poolDictionary.ContainsKey(tag))
+            if (!_poolDictionary.ContainsKey(tag))
             {
                 Debug.LogWarning("Pool with tag " + tag + " doesn't exist.");
                 return null;
             }
-        
+            
             // update so it creates a new object if there are no more in the pool
-            if (poolDictionary[tag].Count == 0)
+            if (_poolDictionary[tag].Count == 0)
             {
                 GameObject obj = Instantiate(pools.Find(x => x.tag == tag).prefab, transform);
                 obj.SetActive(false);
-                poolDictionary[tag].Enqueue(obj);
+                _poolDictionary[tag].Enqueue(obj);
             }
 
-            GameObject objectToSpawn = poolDictionary[tag].Dequeue();
+            GameObject objectToSpawn = _poolDictionary[tag].Dequeue();
             objectToSpawn.SetActive(true);
             objectToSpawn.transform.position = position;
             objectToSpawn.transform.rotation = rotation;
@@ -62,7 +64,7 @@ namespace ObjectPooling
 
         public void ReturnToPool(string tag, GameObject objectToReturn)
         {
-            if (!poolDictionary.ContainsKey(tag))
+            if (!_poolDictionary.ContainsKey(tag))
             {
                 Debug.LogWarning("Pool with tag " + tag + " doesn't exist.");
                 return;
@@ -70,7 +72,7 @@ namespace ObjectPooling
 
             objectToReturn.SetActive(false);
             objectToReturn.transform.SetParent(transform);  // Ensure it's parented back to the ObjectPooler
-            poolDictionary[tag].Enqueue(objectToReturn);
+            _poolDictionary[tag].Enqueue(objectToReturn);
         }
     }
 }

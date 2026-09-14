@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Player.Weapons
@@ -7,7 +6,8 @@ namespace Player.Weapons
     {
         public Transform target;
         [SerializeField] private float projectileSpeed = 20f;
-
+        public float projectileDamage = 0f;
+        
         private void Update()
         {
             Vector3 direction = target.position - transform.position;
@@ -17,6 +17,12 @@ namespace Player.Weapons
             transform.position = vector3;
             
             transform.Translate(direction.normalized * (projectileSpeed * Time.deltaTime), Space.World);
+            float distance = Vector3.Distance(target.position, transform.position);
+            if (distance <= .5f)
+            {
+                target.GetComponent<Enemy.Enemy>().TakeDamage(projectileDamage);
+                Destroy(gameObject); //TODO: Carry to ObjectPooling as well. 15647
+            }
         }
     }
 }

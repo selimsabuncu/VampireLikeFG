@@ -10,19 +10,14 @@ namespace Player.Weapons
             {
                 case WeaponTargetingType.NearestEnemy:
                     return GetNearestEnemy(weapon);
-
                 case WeaponTargetingType.FarthestEnemy:
                     return GetFarthestEnemy(weapon);
-
                 case WeaponTargetingType.RandomEnemy:
                     return GetRandomEnemy(weapon);
-
                 case WeaponTargetingType.LowestHealthEnemy:
                     return GetLowestHealthEnemy(weapon);
-
                 case WeaponTargetingType.HighestHealthEnemy:
                     return GetHighestHealthEnemy(weapon);
-
                 default:
                     return null;
             }
@@ -30,16 +25,16 @@ namespace Player.Weapons
 
         private static Transform GetNearestEnemy(WeaponInstance weapon)
         {
-            Enemy.Enemy[] enemies = Object.FindObjectsByType<Enemy.Enemy>(FindObjectsSortMode.None);
+            Enemy.Enemy[] enemies = GameObject.FindObjectsByType<Enemy.Enemy>();
             if (enemies.Length == 0) return null;
             Transform nearestEnemy = null;
             float nearestDistanceSqr = float.MaxValue;
 
-            Vector3 weaponPosition = PlayerController.Instance.transform.position;
+            Vector3 currentPosition = PlayerController.Instance.transform.position;
 
             foreach (Enemy.Enemy enemy in enemies)
             {
-                float distanceSqr = (enemy.transform.position - weaponPosition).sqrMagnitude;
+                float distanceSqr = (enemy.transform.position - currentPosition).sqrMagnitude;
 
                 if (distanceSqr < nearestDistanceSqr)
                 {
@@ -54,26 +49,80 @@ namespace Player.Weapons
 
         private static Transform GetFarthestEnemy(WeaponInstance weapon)
         {
-            // Find farthest enemy
-            return null;
+            Enemy.Enemy[] enemies = GameObject.FindObjectsByType<Enemy.Enemy>();
+            if (enemies.Length == 0) return null;
+            Transform farthestEnemy = null;
+            float farthestDistanceSqr = 0;
+            
+            Vector3 currentPosition = PlayerController.Instance.transform.position;
+            
+            foreach (Enemy.Enemy enemy in enemies)
+            {
+                float distanceSqr = (enemy.transform.position - currentPosition).sqrMagnitude;
+
+                if (distanceSqr > farthestDistanceSqr)
+                {
+                    farthestDistanceSqr = distanceSqr;
+                    farthestEnemy = enemy.transform;
+                }
+            }
+
+            return farthestEnemy;
         }
 
         private static Transform GetRandomEnemy(WeaponInstance weapon)
         {
-            // Find random enemy
-            return null;
+            Enemy.Enemy[] enemies = GameObject.FindObjectsByType<Enemy.Enemy>();
+            if (enemies.Length == 0) return null;
+            Transform randomEnemy = null;
+
+            randomEnemy = enemies[Random.Range(0, enemies.Length)].transform;
+
+            return randomEnemy;
         }
 
         private static Transform GetLowestHealthEnemy(WeaponInstance weapon)
         {
-            // Find lowest HP enemy
-            return null;
+            Enemy.Enemy[] enemies = GameObject.FindObjectsByType<Enemy.Enemy>();
+            if (enemies.Length == 0) return null;
+            Transform weakestEnemy = enemies[0].transform;
+            float weakestHealth = weakestEnemy.GetComponent<Enemy.Enemy>().Health;
+            
+            foreach (Enemy.Enemy enemy in enemies)
+            {
+                float checkHealth = enemy.Health;
+                
+                if (checkHealth < weakestHealth)
+                {
+                    weakestHealth = checkHealth;
+                    weakestEnemy = enemy.transform;
+                }
+            }
+
+            return weakestEnemy;
         }
 
         private static Transform GetHighestHealthEnemy(WeaponInstance weapon)
         {
-            // Find highest HP enemy
-            return null;
+            Enemy.Enemy[] enemies = GameObject.FindObjectsByType<Enemy.Enemy>();
+            if (enemies.Length == 0) return null;
+            Transform strongestEnemy = enemies[0].transform;
+            float strongestHealth = strongestEnemy.GetComponent<Enemy.Enemy>().Health;
+            
+            Vector3 currentPosition = PlayerController.Instance.transform.position;
+            
+            foreach (Enemy.Enemy enemy in enemies)
+            {
+                float checkHealth = enemy.Health;
+                
+                if (checkHealth > strongestHealth)
+                {
+                    strongestHealth = checkHealth;
+                    strongestEnemy = enemy.transform;
+                }
+            }
+
+            return strongestEnemy;
         }
     }
 }

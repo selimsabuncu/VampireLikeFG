@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Player;
 using UnityEngine;
@@ -14,12 +15,12 @@ namespace Enemy
         private Coroutine _attackCoroutine;
         
         //I don't really need to change these in-script so can get rid of them
-        protected virtual float MovementSpeed { get => movementSpeed; set => movementSpeed = value; }
-        protected virtual float Health { get => health; set => health = value; }
-        protected virtual float XpToDrop { get => health; set => health = value; }
-        protected virtual float AttackDamage { get => health; set => health = value; }
-        
-        protected virtual void Start()
+        public virtual float MovementSpeed { get => movementSpeed; set => movementSpeed = value; }
+        public virtual float Health { get => health; set => health = value; }
+        public virtual float XpToDrop { get => health; set => health = value; }
+        public virtual float AttackDamage { get => health; set => health = value; }
+
+        private void OnEnable()
         {
             _attackCoroutine = StartCoroutine(Attack());
         }
@@ -47,10 +48,20 @@ namespace Enemy
                 yield return new WaitForSeconds(1f);
             }
         }
+
+        public virtual void TakeDamage(float damage)
+        {
+            health -= damage;
+            if (health <= 0)
+            {
+                Die();
+            }
+        }
         
         protected virtual void Die()
         {
             StopCoroutine(_attackCoroutine);
+            ObjectPooling.ObjectPooling.Instance.ReturnToPool("BasicEnemy", gameObject);
             //die animation, sound effect, returnToPool, dropXP
         }
         
