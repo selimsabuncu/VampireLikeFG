@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6e3e971602ed9944b13574a2b792bdc, type: 3}
   m_Name: MagicBolt
   m_EditorClassIdentifier: Assembly-CSharp::Player.Weapons.Weapon
-  attackSprite: {fileID: -2346302928887187388, guid: b72361e00015f4745a424d71082134de, type: 3}
+  attackSprite: {fileID: 157777805, guid: 236872d7d2470964eb270d3cfb669c96, type: 3}
   attackPrefab: {fileID: 1898712334541884093, guid: 97779833b559c024ab88e263f4fe3ca2, type: 3}
   baseData:
     damage: 10
-    cooldown: 200
+    cooldown: 2
     projectileCount: 1
     projectileSpeed: 10
     area: 0
