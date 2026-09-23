@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Managers;
 using Player;
 using UnityEngine;
 
@@ -27,6 +28,7 @@ namespace Enemy
 
         protected virtual void Update()
         {
+            if (!GameManager.Instance.IsState<PlayState>()) return;
             Move();
         }
 
@@ -40,11 +42,16 @@ namespace Enemy
         {
             while (true)
             {
-                float distance = Vector3.Distance(PlayerController.Instance.transform.position, transform.position);
-                if (distance <= attackRange)
+                if (GameManager.Instance.IsState<PlayState>())
                 {
-                    PlayerController.Instance.TakeDamage(attackDamage);
+                    float distance = Vector3.Distance(PlayerController.Instance.transform.position, transform.position);
+                    
+                    if (distance <= attackRange)
+                    {
+                        PlayerController.Instance.TakeDamage(attackDamage);
+                    }
                 }
+                
                 yield return new WaitForSeconds(1f);
             }
         }

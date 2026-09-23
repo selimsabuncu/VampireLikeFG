@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Managers;
 using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -23,12 +24,15 @@ namespace Enemy
         {
             while (true)
             {
-                Vector3 playerPosition = PlayerController.Instance.transform.position;
-                Vector2 spawnLocation = new Vector2(
-                    Random.Range(playerPosition.x - spawnRange, playerPosition.x - spawnRange), 
-                    Random.Range(playerPosition.y - spawnRange, playerPosition.y - spawnRange));
+                if (GameManager.Instance.IsState<PlayState>())
+                {
+                    Vector3 playerPosition = PlayerController.Instance.transform.position;
+                    Vector2 spawnLocation = new Vector2(
+                        Random.Range(playerPosition.x - spawnRange, playerPosition.x - spawnRange), 
+                        Random.Range(playerPosition.y - spawnRange, playerPosition.y - spawnRange));
                 
-                ObjectPooling.ObjectPooling.Instance.SpawnFromPool("BasicEnemy", spawnLocation, Quaternion.identity);
+                    ObjectPooling.ObjectPooling.Instance.SpawnFromPool("BasicEnemy", spawnLocation, Quaternion.identity);
+                }
                 
                 yield return  new WaitForSeconds(cooldown);
             }

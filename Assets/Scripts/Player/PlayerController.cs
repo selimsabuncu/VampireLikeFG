@@ -1,6 +1,8 @@
 using System;
 using Extensions;
+using Managers;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Player
 {
@@ -9,6 +11,7 @@ namespace Player
         private Vector3 _movement;
         [SerializeField] private float movementSpeed = 5;
         [SerializeField] private float health = 100;
+        [SerializeField] private Slider healthBar;
         
         private void Update()
         {
@@ -20,16 +23,21 @@ namespace Player
 
         private void FixedUpdate()
         {
+            if (!GameManager.Instance.IsState<PlayState>()) return;
+            
             transform.position += _movement * (movementSpeed * Time.fixedDeltaTime);
         }
 
         public void TakeDamage(float damageAmount)
         {
             health -= damageAmount;
+            healthBar.value = health/100;
+            if (health <= 0) Die();
         }
 
         public void Die()
         {
+            Debug.Log("you ded");
             //game over screen
         }
     }
