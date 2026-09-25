@@ -6,7 +6,7 @@ namespace Player.Weapons
     {
         public override void Activate(WeaponInstance weapon)
         {
-            Transform target = TargetingSystem.GetTarget(weapon.Weapon.targeting, weapon);
+            Transform target = TargetingSystem.GetTarget(weapon.Weapon.targeting);
             if (target == null) return;
             
             GameObject newGO = Instantiate(weapon.Weapon.attackPrefab, PlayerController.Instance.transform.position, Quaternion.identity);

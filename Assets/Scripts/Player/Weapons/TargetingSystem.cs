@@ -4,26 +4,26 @@ namespace Player.Weapons
 {
     public static class TargetingSystem
     {
-        public static Transform GetTarget(WeaponTargetingType targetingType, WeaponInstance weapon)
+        public static Transform GetTarget(WeaponTargetingType targetingType)
         {
             switch (targetingType)
             {
                 case WeaponTargetingType.NearestEnemy:
-                    return GetNearestEnemy(weapon);
+                    return GetNearestEnemy();
                 case WeaponTargetingType.FarthestEnemy:
-                    return GetFarthestEnemy(weapon);
+                    return GetFarthestEnemy();
                 case WeaponTargetingType.RandomEnemy:
-                    return GetRandomEnemy(weapon);
+                    return GetRandomEnemy();
                 case WeaponTargetingType.LowestHealthEnemy:
-                    return GetLowestHealthEnemy(weapon);
+                    return GetLowestHealthEnemy();
                 case WeaponTargetingType.HighestHealthEnemy:
-                    return GetHighestHealthEnemy(weapon);
+                    return GetHighestHealthEnemy();
                 default:
                     return null;
             }
         }
 
-        private static Transform GetNearestEnemy(WeaponInstance weapon)
+        private static Transform GetNearestEnemy()
         {
             Enemy.Enemy[] enemies = GameObject.FindObjectsByType<Enemy.Enemy>();
             if (enemies.Length == 0) return null;
@@ -47,7 +47,7 @@ namespace Player.Weapons
         }
 
 
-        private static Transform GetFarthestEnemy(WeaponInstance weapon)
+        private static Transform GetFarthestEnemy()
         {
             Enemy.Enemy[] enemies = GameObject.FindObjectsByType<Enemy.Enemy>();
             if (enemies.Length == 0) return null;
@@ -70,7 +70,7 @@ namespace Player.Weapons
             return farthestEnemy;
         }
 
-        private static Transform GetRandomEnemy(WeaponInstance weapon)
+        private static Transform GetRandomEnemy()
         {
             Enemy.Enemy[] enemies = GameObject.FindObjectsByType<Enemy.Enemy>();
             if (enemies.Length == 0) return null;
@@ -81,7 +81,7 @@ namespace Player.Weapons
             return randomEnemy;
         }
 
-        private static Transform GetLowestHealthEnemy(WeaponInstance weapon)
+        private static Transform GetLowestHealthEnemy()
         {
             Enemy.Enemy[] enemies = GameObject.FindObjectsByType<Enemy.Enemy>();
             if (enemies.Length == 0) return null;
@@ -102,7 +102,7 @@ namespace Player.Weapons
             return weakestEnemy;
         }
 
-        private static Transform GetHighestHealthEnemy(WeaponInstance weapon)
+        private static Transform GetHighestHealthEnemy()
         {
             Enemy.Enemy[] enemies = GameObject.FindObjectsByType<Enemy.Enemy>();
             if (enemies.Length == 0) return null;

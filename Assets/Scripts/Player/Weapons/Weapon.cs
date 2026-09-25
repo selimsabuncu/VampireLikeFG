@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Player.Weapons
 {
     //TODO: could be simplified and optimized better. Too complex and mind confusing at the moment.
-    //Can get rid of the whole system and just make one script each for attackSkill.
+    //Targeting system uses FindObjects for enemies each time a weapon is going to shoot. Could be just getting from objectPooling
     [CreateAssetMenu(menuName = "Weapons/Weapon")]
     public class Weapon : ScriptableObject
     {

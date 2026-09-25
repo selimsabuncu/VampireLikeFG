@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 
 namespace Player.Weapons
@@ -18,6 +19,8 @@ namespace Player.Weapons
 
         private void Update()
         {
+            if (!GameManager.Instance.IsState<PlayState>()) return;
+            
             foreach (WeaponInstance weapon in weaponManager.weapons)
             {
                 if (!cooldownTimers.ContainsKey(weapon))

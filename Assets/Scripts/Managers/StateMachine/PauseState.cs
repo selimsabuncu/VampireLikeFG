@@ -11,6 +11,7 @@ namespace Managers
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 GameManager.Instance.SwitchState<PlayState>();
+                SettingsManager.Instance.OpenSettings(false);
             }
         }
     }

@@ -8,7 +8,7 @@ namespace Managers
         public void PlayGame()
         {
             //load? change scenes
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("GameScene");
         }
 
         public void SettingsMenu()

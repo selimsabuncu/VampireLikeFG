@@ -35,7 +35,7 @@ namespace Player
             if (health <= 0) Die();
         }
 
-        public void Die()
+        private void Die()
         {
             Debug.Log("you ded");
             //game over screen
