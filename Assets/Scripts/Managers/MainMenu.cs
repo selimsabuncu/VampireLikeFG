@@ -11,9 +11,9 @@ namespace Managers
             SceneManager.LoadScene("GameScene");
         }
 
-        public void SettingsMenu()
+        public void SettingsMenu(bool setting)
         {
-            SettingsManager.Instance.OpenSettings(true);
+            SettingsManager.Instance.OpenSettings(setting);
         }
         
         public void QuitGame()
