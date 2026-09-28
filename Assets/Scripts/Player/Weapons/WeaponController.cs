@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Managers;
+using Managers.GameStates;
 using UnityEngine;
 
 namespace Player.Weapons

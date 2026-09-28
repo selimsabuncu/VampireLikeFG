@@ -1,4 +1,5 @@
-﻿using Player;
+﻿using Managers.GameStates;
+using Player;
 using UnityEngine;
 
 namespace Managers

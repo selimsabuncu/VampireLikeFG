@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using Managers;
+using Managers.GameStates;
+using Managers.ObservedUpdate;
 using Player;
 using UnityEngine;
 
 namespace Enemy
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour, IUpdateObserver
     {
         [SerializeField] protected float movementSpeed = 5f;
         [SerializeField] protected float health = 100f;
@@ -20,15 +22,20 @@ namespace Enemy
         public virtual float Health { get => health; set => health = value; }
         public virtual float XpToDrop { get => health; set => health = value; }
         public virtual float AttackDamage { get => health; set => health = value; }
-
+        
         private void OnEnable()
         {
             _attackCoroutine = StartCoroutine(Attack());
+            UpdateManager.RegisterObserver(this);
         }
 
-        protected virtual void Update()
+        private void OnDisable()
         {
-            if (!GameManager.Instance.IsState<PlayState>()) return;
+            UpdateManager.UnregisterObserver(this);
+        }
+
+        public void ObservedUpdate()
+        {
             Move();
         }
 

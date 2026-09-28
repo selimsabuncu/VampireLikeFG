@@ -1,5 +1,6 @@
 using System;
 using Extensions;
+using Managers.GameStates;
 using Player.Weapons;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -16,32 +17,31 @@ namespace Player
          */
         
         private Weapons.Weapon[] _weapons;
-        private LevelUpChoice[] _weaponChoice;
-        
-        private void Start()
-        {
-            Debug.Log("Start");
-            _weapons =  Resources.LoadAll<Weapons.Weapon>("WeaponData&Prefabs");
-            _weaponChoice = levelUpScreen.GetComponentsInChildren<LevelUpChoice>(true);
-        }
-
+        private LevelUpChoice[] _levelUpChoice;
         [SerializeField] private GameObject levelUpScreen;
 
+        private void Start()
+        {
+            _weapons =  Resources.LoadAll<Weapons.Weapon>("WeaponData&Prefabs");
+            _levelUpChoice = levelUpScreen.GetComponentsInChildren<LevelUpChoice>(true);
+            levelUpScreen.SetActive(false);
+        }
 
         public void ActivateLevelUpScreen(bool setTo)
         {
-            foreach (var choice in _weaponChoice)
-            {
-                var randomWeapon = _weapons[Random.Range(0, _weapons.Length)];
-                choice.weapon = randomWeapon;
-            }
-            
+            RandomizeOptions();
+
+            if (setTo == true) GameManager.Instance.SwitchState<UpgradeState>();
             levelUpScreen.SetActive(setTo);
         }
-
+        
         private void RandomizeOptions()
         {
-            
+            foreach (var choice in _levelUpChoice)
+            {
+                choice.weapon = _weapons[Random.Range(0, _weapons.Length)];
+                choice.UpdateUI();
+            }
         }
     }
 }

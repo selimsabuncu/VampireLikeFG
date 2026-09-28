@@ -1,8 +1,4 @@
-using System;
-using Extensions;
-using UnityEngine;
-
-namespace Managers
+namespace Managers.GameStates
 {
     public class GameManager : StateMachine
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Managers
+namespace Managers.GameStates
 {
     public class PauseState : State
     {

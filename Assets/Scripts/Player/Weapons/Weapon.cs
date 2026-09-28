@@ -8,6 +8,8 @@ namespace Player.Weapons
     [CreateAssetMenu(menuName = "Weapons/Weapon")]
     public class Weapon : ScriptableObject
     {
+        public string weaponName;
+        public string weaponDescription;
         public Sprite attackSprite;
         public GameObject attackPrefab;
         

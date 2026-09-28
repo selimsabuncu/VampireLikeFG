@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3304732394272580606}
   - component: {fileID: 7853852669593039765}
   m_Layer: 0
-  m_Name: MagicBolt
+  m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 157777805, guid: 236872d7d2470964eb270d3cfb669c96, type: 3}
+  m_Sprite: {fileID: -2346302928887187388, guid: b72361e00015f4745a424d71082134de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,5 +106,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Weapons.WeaponProjectile
   target: {fileID: 0}
-  projectileSpeed: 15
+  projectileSpeed: 20
   projectileDamage: 0

@@ -10,25 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6e3e971602ed9944b13574a2b792bdc, type: 3}
-  m_Name: MagicBolt
+  m_Name: Gun
   m_EditorClassIdentifier: Assembly-CSharp::Player.Weapons.Weapon
-  weaponName: Magic Bolt
-  weaponDescription: Compressed mana shaped as a bolt.
-  attackSprite: {fileID: 157777805, guid: 236872d7d2470964eb270d3cfb669c96, type: 3}
+  weaponName: Gun
+  weaponDescription: Gun'emdown
+  attackSprite: {fileID: -2346302928887187388, guid: b72361e00015f4745a424d71082134de, type: 3}
   attackPrefab: {fileID: 1898712334541884093, guid: 97779833b559c024ab88e263f4fe3ca2, type: 3}
   baseData:
-    damage: 10
-    cooldown: 2
+    damage: 20
+    cooldown: 3
     projectileCount: 1
-    projectileSpeed: 10
+    projectileSpeed: 15
     area: 0
     duration: 0
-  levels:
-  - description: 
-    additionalProjectiles: 0
-    damageModifier: 0
-    cooldownModifier: 0
-    areaModifier: 0
-    speedModifier: 0
+  levels: []
   behaviour: 0
-  targeting: 3
+  targeting: 4

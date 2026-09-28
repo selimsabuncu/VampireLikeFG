@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using Managers;
+using Managers.GameStates;
+using Managers.ObservedUpdate;
 using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
