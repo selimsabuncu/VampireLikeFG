@@ -8,7 +8,7 @@ namespace Player.Weapons
     {
         [SerializeField] private List<Weapon> startingWeapons;
 
-        public readonly List<WeaponInstance> weapons = new();
+        [SerializeField] public List<WeaponInstance> weapons = new();
 
         private void Awake() => InitializeWeapons(); 
 

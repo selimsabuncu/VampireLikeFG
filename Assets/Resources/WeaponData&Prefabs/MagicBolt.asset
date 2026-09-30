@@ -24,11 +24,11 @@ MonoBehaviour:
     area: 0
     duration: 0
   levels:
-  - description: 
-    additionalProjectiles: 0
-    damageModifier: 0
-    cooldownModifier: 0
-    areaModifier: 0
-    speedModifier: 0
+  - statToLevel: 0
+    value: 10
+  - statToLevel: 0
+    value: 15
+  - statToLevel: 2
+    value: 0.2
   behaviour: 0
   targeting: 3

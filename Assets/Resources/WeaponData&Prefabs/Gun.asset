@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: Gun
   weaponDescription: Gun'emdown
   attackSprite: {fileID: -2346302928887187388, guid: b72361e00015f4745a424d71082134de, type: 3}
-  attackPrefab: {fileID: 1898712334541884093, guid: 97779833b559c024ab88e263f4fe3ca2, type: 3}
+  attackPrefab: {fileID: 1898712334541884093, guid: 7775cea53ca0812438971ac302a3773c, type: 3}
   baseData:
     damage: 20
     cooldown: 3

@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using Extensions;
 using Managers.GameStates;
 using Player.Weapons;
@@ -9,39 +9,98 @@ namespace Player
 {
     public class PlayerLevelManager : MonoSingleton<PlayerLevelManager>
     {
-        /*onLevelUp
-         bring out the level UI
-         buttons will have levelUp methods from this script
-         levelUp method will activate WeaponManager levelUp
-         get rid of levelUpUI
-         */
-        
-        private Weapons.Weapon[] _weapons;
-        private LevelUpChoice[] _levelUpChoice;
         [SerializeField] private GameObject levelUpScreen;
+
+        private Weapon[] _weapons;
+        private LevelUpChoice[] _levelUpChoices;
 
         private void Start()
         {
-            _weapons =  Resources.LoadAll<Weapons.Weapon>("WeaponData&Prefabs");
-            _levelUpChoice = levelUpScreen.GetComponentsInChildren<LevelUpChoice>(true);
+            _weapons = Resources.LoadAll<Weapon>("WeaponData&Prefabs");
+            _levelUpChoices = levelUpScreen.GetComponentsInChildren<LevelUpChoice>(true);
             levelUpScreen.SetActive(false);
         }
 
         public void ActivateLevelUpScreen(bool setTo)
         {
-            RandomizeOptions();
+            if (setTo)
+            {
+                RandomizeOptions();
+                GameManager.Instance.SwitchState<UpgradeState>();
+            }
 
-            if (setTo == true) GameManager.Instance.SwitchState<UpgradeState>();
             levelUpScreen.SetActive(setTo);
         }
-        
+
         private void RandomizeOptions()
         {
-            foreach (var choice in _levelUpChoice)
+            foreach (LevelUpChoice choice in _levelUpChoices)
             {
-                choice.weapon = _weapons[Random.Range(0, _weapons.Length)];
-                choice.UpdateUI();
+                bool chooseNewWeapon = Random.value > 0.5f;
+
+                if (chooseNewWeapon)
+                {
+                    Weapon weapon = GetRandomNewWeapon();
+
+                    if (weapon != null)
+                    {
+                        choice.SetNewWeapon(weapon);
+                        continue;
+                    }
+                }
+                
+                WeaponInstance weaponToUpgrade = GetRandomUpgradeableWeapon();
+
+                if (weaponToUpgrade != null)
+                {
+                    choice.SetWeaponUpgrade(weaponToUpgrade);
+                }
             }
+        }
+
+        private Weapon GetRandomNewWeapon()
+        {
+            List<Weapon> availableWeapons = new();
+
+            IReadOnlyList<WeaponInstance> ownedWeapons = WeaponManager.Instance.GetWeapons();
+
+            foreach (Weapon weapon in _weapons)
+            {
+                bool alreadyOwned = false;
+
+                foreach (WeaponInstance ownedWeapon in ownedWeapons)
+                {
+                    if (ownedWeapon.Weapon == weapon)
+                    {
+                        alreadyOwned = true;
+                        break;
+                    }
+                }
+
+                if (!alreadyOwned)
+                {
+                    availableWeapons.Add(weapon);
+                }
+            }
+
+            if (availableWeapons.Count == 0) return null;
+
+            return availableWeapons[Random.Range(0, availableWeapons.Count)];
+        }
+
+        private WeaponInstance GetRandomUpgradeableWeapon()
+        {
+            IReadOnlyList<WeaponInstance> ownedWeapons = WeaponManager.Instance.GetWeapons();
+            List<WeaponInstance> upgradeableWeapons = new();
+            foreach (WeaponInstance weapon in ownedWeapons)
+            {
+                if (weapon.Level <= weapon.Weapon.levels.Count)
+                {
+                    upgradeableWeapons.Add(weapon);
+                }
+            }
+            if (upgradeableWeapons.Count == 0) return null;
+            return upgradeableWeapons[Random.Range(0, upgradeableWeapons.Count)];
         }
     }
 }

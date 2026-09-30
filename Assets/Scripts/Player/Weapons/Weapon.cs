@@ -10,7 +10,7 @@ namespace Player.Weapons
     {
         public string weaponName;
         public string weaponDescription;
-        public Sprite attackSprite;
+        public Sprite attackSprite; 
         public GameObject attackPrefab;
         
         public WeaponBaseData baseData;

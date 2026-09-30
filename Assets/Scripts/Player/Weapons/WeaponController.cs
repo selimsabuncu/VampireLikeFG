@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Managers;
 using Managers.GameStates;
+using Managers.ObservedUpdate;
 using UnityEngine;
 
 namespace Player.Weapons
 {
-    public class WeaponController : MonoBehaviour
+    public class WeaponController : MonoBehaviour, IUpdateObserver
     {
         private WeaponManager weaponManager;
         private ProjectileBehaviour projectileBehaviour;
@@ -17,10 +19,18 @@ namespace Player.Weapons
             projectileBehaviour = GetComponent<ProjectileBehaviour>();
         }
 
-
-        private void Update()
+        private void OnEnable()
         {
-            if (!GameManager.Instance.IsState<PlayState>()) return;
+            UpdateManager.RegisterObserver(this);
+        }
+
+        private void OnDisable()
+        {
+            UpdateManager.UnregisterObserver(this);
+        }
+
+        public void ObservedUpdate()
+        {
             
             foreach (WeaponInstance weapon in weaponManager.weapons)
             {
@@ -34,7 +44,9 @@ namespace Player.Weapons
                 if (cooldownTimers[weapon] > 0f) continue;
                 ActivateWeapon(weapon);
 
-                cooldownTimers[weapon] = weapon.Weapon.baseData.cooldown;
+                cooldownTimers[weapon] = weapon.Cooldown;
+                
+                Debug.Log($"Level: {weapon.Level} Damage: {weapon.Damage} Cooldown: {weapon.Cooldown}");
             }
         }
 
