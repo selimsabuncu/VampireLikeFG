@@ -12,6 +12,7 @@ namespace Enemy
     {
         [SerializeField] protected float movementSpeed = 5f;
         [SerializeField] protected float health = 100f;
+        [SerializeField] protected float currentHealth = 100f;
         [SerializeField] protected float attackDamage = 5f;
         [SerializeField] protected float xpToDrop = 5f;
         [SerializeField] protected float attackRange = 1f;
@@ -19,14 +20,17 @@ namespace Enemy
         
         //I don't really need to change these in-script so can get rid of them
         public virtual float MovementSpeed { get => movementSpeed; set => movementSpeed = value; }
-        public virtual float Health { get => health; set => health = value; }
-        public virtual float XpToDrop { get => health; set => health = value; }
-        public virtual float AttackDamage { get => health; set => health = value; }
+        public virtual float CurrentHealth { get => currentHealth; set => currentHealth = value; }
+        public virtual float XpToDrop { get => xpToDrop; set => xpToDrop = value; }
+        public virtual float AttackDamage { get => attackDamage; set => attackDamage = value; }
         
         private void OnEnable()
         {
             _attackCoroutine = StartCoroutine(Attack());
             UpdateManager.RegisterObserver(this);
+            
+            if (RunManager.Instance.CurrentTime < 60f) { CurrentHealth = health; }
+            else { CurrentHealth = health * RunManager.Instance.CurrentTime / 60f; }
         }
 
         private void OnDisable()
@@ -47,6 +51,12 @@ namespace Enemy
 
         protected virtual IEnumerator Attack()
         {
+            //TODO: Am I supposed add a new one each time? how to fix this shit we wonder
+            yield return new WaitUntil(() => 
+                GameManager.Instance != null
+                && PlayerController.Instance != null
+                && RunManager.Instance != null);
+            
             while (true)
             {
                 if (GameManager.Instance.IsState<PlayState>())
@@ -65,8 +75,8 @@ namespace Enemy
 
         public virtual void TakeDamage(float damage)
         {
-            health -= damage;
-            if (health <= 0)
+            currentHealth -= damage;
+            if (currentHealth <= 0)
             {
                 Die();
             }
@@ -74,6 +84,8 @@ namespace Enemy
         
         protected virtual void Die()
         {
+            GameObject xp = ObjectPooling.ObjectPooling.Instance.SpawnFromPool("xpDrop", transform.position, Quaternion.identity);
+            xp.GetComponent<XPDrop>().xpValue = XpToDrop;
             StopCoroutine(_attackCoroutine);
             ObjectPooling.ObjectPooling.Instance.ReturnToPool("BasicEnemy", gameObject);
             //die animation, sound effect, returnToPool, dropXP

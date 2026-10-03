@@ -86,11 +86,11 @@ namespace Player.Weapons
             Enemy.Enemy[] enemies = GameObject.FindObjectsByType<Enemy.Enemy>();
             if (enemies.Length == 0) return null;
             Transform weakestEnemy = enemies[0].transform;
-            float weakestHealth = weakestEnemy.GetComponent<Enemy.Enemy>().Health;
+            float weakestHealth = weakestEnemy.GetComponent<Enemy.Enemy>().CurrentHealth;
             
             foreach (Enemy.Enemy enemy in enemies)
             {
-                float checkHealth = enemy.Health;
+                float checkHealth = enemy.CurrentHealth;
                 
                 if (checkHealth < weakestHealth)
                 {
@@ -107,13 +107,13 @@ namespace Player.Weapons
             Enemy.Enemy[] enemies = GameObject.FindObjectsByType<Enemy.Enemy>();
             if (enemies.Length == 0) return null;
             Transform strongestEnemy = enemies[0].transform;
-            float strongestHealth = strongestEnemy.GetComponent<Enemy.Enemy>().Health;
+            float strongestHealth = strongestEnemy.GetComponent<Enemy.Enemy>().CurrentHealth;
             
             Vector3 currentPosition = PlayerController.Instance.transform.position;
             
             foreach (Enemy.Enemy enemy in enemies)
             {
-                float checkHealth = enemy.Health;
+                float checkHealth = enemy.CurrentHealth;
                 
                 if (checkHealth > strongestHealth)
                 {

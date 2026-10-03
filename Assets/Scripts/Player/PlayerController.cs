@@ -4,6 +4,7 @@ using Managers;
 using Managers.GameStates;
 using Managers.ObservedUpdate;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Player
@@ -17,8 +18,9 @@ namespace Player
         [SerializeField] private Slider healthBar;
         [Header("Leveling")]
         [SerializeField] private float playerXP;
-        [SerializeField] private int currentXP;
+        [SerializeField] private float currentXP;
         [SerializeField] private int level;
+        [SerializeField] private Slider xpBar;
         
         private void OnEnable()
         {
@@ -45,12 +47,15 @@ namespace Player
             transform.position += _movement * (movementSpeed * Time.fixedDeltaTime);
         }
 
-        public void CollectedXP(int amountOfXP)
+        public void CollectedXP(float amountOfXP)
         {
             currentXP += amountOfXP;
+            xpBar.value = currentXP/100;
             if (currentXP >= 100)
             {
                 PlayerLevelManager.Instance.ActivateLevelUpScreen(true);
+                currentXP = 0;
+                xpBar.value = currentXP;
             }
         }
         
@@ -63,7 +68,9 @@ namespace Player
 
         private void Die()
         {
-            Debug.Log("you ded");
+            PlayerPrefs.SetFloat("timeScore", RunManager.Instance.CurrentTime);
+            GameManager.Instance.SwitchState<GameOverState>();
+            GameOverManager.Instance.GameOverActivate();
             //game over screen
         }
     }
