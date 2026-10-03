@@ -23,5 +23,15 @@ namespace Managers
         {
             CurrentTime += Time.deltaTime;
         }
+
+        public string GetHighScoreString()
+        {
+            return TimeSpan.FromSeconds(PlayerPrefs.GetFloat("timeScore")).ToString(@"hh\:mm\:ss");
+        }
+        
+        public string GetCurrentTimeString()
+        {
+            return TimeSpan.FromSeconds(CurrentTime).ToString(@"hh\:mm\:ss");
+        }
     }
 }

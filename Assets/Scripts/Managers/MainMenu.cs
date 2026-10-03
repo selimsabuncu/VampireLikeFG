@@ -11,7 +11,7 @@ namespace Managers
 
         private void OnEnable()
         {
-            highScoreText.text = "High score:\n" + TimeSpan.FromSeconds(PlayerPrefs.GetFloat("timeScore")).ToString(@"hh\:mm\:ss");
+            highScoreText.text = "High score:\n" + RunManager.Instance.GetHighScoreString();
         }
 
         public void PlayGame()
