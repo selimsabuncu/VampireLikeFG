@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Extensions;
 using Managers;
 using Managers.GameStates;
 using Managers.ObservedUpdate;
@@ -84,6 +85,8 @@ namespace Enemy
         
         protected virtual void Die()
         {
+            ParticleHelper.Instance.SpawnParticleAtLocation("blood", transform.position);
+            AudioManager.Instance.PlayAudioAtLocation("deathScream", transform.position, true);
             GameObject xp = ObjectPooling.ObjectPooling.Instance.SpawnFromPool("xpDrop", transform.position, Quaternion.identity);
             xp.GetComponent<XPDrop>().xpValue = XpToDrop;
             StopCoroutine(_attackCoroutine);

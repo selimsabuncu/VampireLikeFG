@@ -1,3 +1,4 @@
+using Extensions;
 using Managers;
 using Managers.GameStates;
 using Player.Weapons;
@@ -51,6 +52,10 @@ namespace Player
             }
 
             PlayerLevelManager.Instance.ActivateLevelUpScreen(false);
+            
+            ParticleHelper.Instance.SpawnParticleAtLocation("levelUp", PlayerController.Instance.transform.position);
+            AudioManager.Instance.PlayAudioAtLocation("levelUp", PlayerController.Instance.transform.position);
+            
             GameManager.Instance.SwitchState<PlayState>();
         }
     }

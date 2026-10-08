@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using Managers;
 using Managers.GameStates;
-using Managers.ObservedUpdate;
 using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -12,14 +10,29 @@ namespace Enemy
     public class EnemySpawn : MonoBehaviour
     {
         private Coroutine _spawnCoroutine;
-        public int cooldown = 5;
+        public float cooldown = 5;
         public int spawnRange = 20;
         public string[] enemiesToSpawn;
         //TODO: Spawn enemies randomly by weighted enemy chance
         
-        private void Start()
+        private IEnumerator Start()
         {
             _spawnCoroutine = StartCoroutine(EnemiesSpawning());
+            
+            while (true)
+            {
+                switch (RunManager.Instance.CurrentTime)
+                {
+                    case >=120f:
+                        cooldown = 2f;
+                        break;
+                    case >=60f:
+                        cooldown = 3.5f;
+                        break;
+                }
+
+                yield return new WaitForSeconds(5f);
+            }
         }
 
         private IEnumerator EnemiesSpawning()
