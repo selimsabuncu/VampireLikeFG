@@ -29,6 +29,8 @@ MonoBehaviour:
   - statToLevel: 0
     value: 15
   - statToLevel: 2
-    value: 0.2
+    value: 0.25
+  - statToLevel: 2
+    value: 0.25
   behaviour: 0
   targeting: 3

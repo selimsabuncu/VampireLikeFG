@@ -23,6 +23,14 @@ MonoBehaviour:
     projectileSpeed: 15
     area: 0
     duration: 0
-  levels: []
+  levels:
+  - statToLevel: 0
+    value: 10
+  - statToLevel: 0
+    value: 10
+  - statToLevel: 0
+    value: 10
+  - statToLevel: 2
+    value: 1
   behaviour: 0
   targeting: 4

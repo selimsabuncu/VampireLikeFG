@@ -785,6 +785,9 @@ MonoBehaviour:
   spawnRange: 20
   enemiesToSpawn:
   - BasicEnemy
+  - ExplodingEnemy
+  explodingEnemyStartTime: 15
+  explodingEnemyChance: 0.15
 --- !u!1 &202602443
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,6 +999,8 @@ MonoBehaviour:
     prefab: {fileID: 8687926921712630614, guid: 77bd93066664d724d89e4a20a6d6b5b2, type: 3}
   - id: levelUp
     prefab: {fileID: 7019603410832356462, guid: 75ff38e7007d46049a732f740e449c92, type: 3}
+  - id: explodingParticle
+    prefab: {fileID: 988218710055839257, guid: 104492506ff646d4a9616437891ad2fb, type: 3}
 --- !u!1 &330417678
 GameObject:
   m_ObjectHideFlags: 0
@@ -3247,6 +3252,9 @@ MonoBehaviour:
   - tag: BasicEnemy
     prefab: {fileID: 5752287499119780612, guid: daa1de4491b3df9439b5cc7c59798866, type: 3}
     size: 20
+  - tag: ExplodingEnemy
+    prefab: {fileID: 5752287499119780612, guid: 1d962f289cc2ac643a1ef435478fe74d, type: 3}
+    size: 10
   - tag: xpDrop
     prefab: {fileID: 4920600682810103074, guid: 7f2ab41c7199e874d991918be1ac7b43, type: 3}
     size: 100

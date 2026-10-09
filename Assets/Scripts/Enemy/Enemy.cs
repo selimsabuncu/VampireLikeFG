@@ -24,6 +24,7 @@ namespace Enemy
         public virtual float CurrentHealth { get => currentHealth; set => currentHealth = value; }
         public virtual float XpToDrop { get => xpToDrop; set => xpToDrop = value; }
         public virtual float AttackDamage { get => attackDamage; set => attackDamage = value; }
+        protected virtual string PoolKey => "BasicEnemy";
         
         private void OnEnable()
         {
@@ -85,12 +86,11 @@ namespace Enemy
         
         protected virtual void Die()
         {
-            ParticleHelper.Instance.SpawnParticleAtLocation("blood", transform.position);
             AudioManager.Instance.PlayAudioAtLocation("deathScream", transform.position, true);
             GameObject xp = ObjectPooling.ObjectPooling.Instance.SpawnFromPool("xpDrop", transform.position, Quaternion.identity);
             xp.GetComponent<XPDrop>().xpValue = XpToDrop;
             StopCoroutine(_attackCoroutine);
-            ObjectPooling.ObjectPooling.Instance.ReturnToPool("BasicEnemy", gameObject);
+            ObjectPooling.ObjectPooling.Instance.ReturnToPool(PoolKey, gameObject);
             //die animation, sound effect, returnToPool, dropXP
         }
         

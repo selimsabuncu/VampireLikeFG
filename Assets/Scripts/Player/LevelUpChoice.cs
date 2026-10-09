@@ -30,10 +30,25 @@ namespace Player
         public void SetWeaponUpgrade(WeaponInstance weapon)
         {
             _newWeapon = null;
+            _weaponToUpgrade = null;
+
+            if (weapon == null || weapon.Weapon == null) return;
+
+            if (weapon.Weapon.levels == null ||
+                weapon.Level < 0 ||
+                weapon.Level >= weapon.Weapon.levels.Count)
+            {
+                Debug.LogWarning($"Weapon {weapon.Weapon.weaponName} has no available upgrades.");
+                return;
+            }
+
             _weaponToUpgrade = weapon;
+
             weaponIcon.sprite = weapon.Weapon.attackSprite;
             weaponName.text = weapon.Weapon.weaponName;
+
             WeaponLevelData nextLevel = weapon.Weapon.levels[weapon.Level];
+
             weaponDescription.text = $"{nextLevel.StatToLevel} +{nextLevel.Value}";
         }
 
